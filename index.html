@@ -3,15 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Herbier — catalogue des références</title>
+<title>Isolatier — catalogue des références</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#10130E; --surface:#191E16; --surface-2:#222A1D; --line:#2E3827;
-  --txt:#ECEFE6; --muted:#8C9682;
-  --fruite:#E5605B; --sucre:#E3A83A; --herbace:#79C25A; --terreux:#B98459;
+  --bg:#0D0F13; --surface:#161A20; --surface-2:#1E242C; --line:#2A323C;
+  --txt:#E9EDF3; --muted:#8695A6;
+  --royal:#9B7BD4; --huileux:#D9A441; --citron:#E0D64F; --acidule:#79C68B;
+  --accent:#DFA93C;
   --display:"Bricolage Grotesque",system-ui,sans-serif;
   --body:"IBM Plex Sans",system-ui,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,monospace;
@@ -22,7 +23,7 @@ html,body{margin:0}
 body{
   background:var(--bg); color:var(--txt); font-family:var(--body);
   font-size:15px; line-height:1.5; -webkit-font-smoothing:antialiased;
-  background-image:radial-gradient(120% 60% at 50% -10%, #1A2117 0%, var(--bg) 60%);
+  background-image:radial-gradient(120% 60% at 50% -10%, #151A22 0%, var(--bg) 60%);
   min-height:100vh;
 }
 .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
@@ -31,13 +32,13 @@ body{
 header{padding:44px 0 26px}
 .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
 h1{font-family:var(--display);font-weight:800;font-size:clamp(38px,7vw,64px);line-height:.95;margin:0;letter-spacing:-.02em}
-h1 em{font-style:normal;color:var(--herbace)}
+h1 em{font-style:normal;color:var(--accent)}
 .sub{color:var(--muted);margin:12px 0 0;max-width:46ch}
 
 /* ── Barre de filtres ──────────────────────────────────── */
 .filters{
   position:sticky;top:0;z-index:20;margin-top:26px;
-  background:rgba(16,19,14,.86);backdrop-filter:blur(10px);
+  background:rgba(13,15,19,.86);backdrop-filter:blur(10px);
   border-top:1px solid var(--line);border-bottom:1px solid var(--line);
 }
 .filters-inner{display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:14px 0}
@@ -48,7 +49,7 @@ select,input[type=text],input[type=search]{
   background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
   padding:9px 12px;min-width:150px;
 }
-select:focus-visible,input:focus-visible,button:focus-visible{outline:2px solid var(--herbace);outline-offset:2px}
+select:focus-visible,input:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
 .capsules{display:flex;flex-wrap:wrap;gap:8px}
 .cap{
@@ -59,8 +60,8 @@ select:focus-visible,input:focus-visible,button:focus-visible{outline:2px solid 
 }
 .cap .dot{width:9px;height:9px;border-radius:50%;background:var(--c);flex:none;transition:transform .15s}
 .cap:hover{border-color:var(--c)}
-.cap[aria-pressed=true]{background:var(--c);border-color:var(--c);color:#10130E}
-.cap[aria-pressed=true] .dot{background:#10130E;transform:scale(.8)}
+.cap[aria-pressed=true]{background:var(--c);border-color:var(--c);color:#0D0F13}
+.cap[aria-pressed=true] .dot{background:#0D0F13;transform:scale(.8)}
 
 .logic{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--surface)}
 .logic button{font-family:var(--mono);font-size:11px;letter-spacing:.1em;background:none;border:0;color:var(--muted);padding:8px 12px;cursor:pointer}
@@ -87,22 +88,20 @@ select:focus-visible,input:focus-visible,button:focus-visible{outline:2px solid 
 .ref{font-family:var(--display);font-weight:700;font-size:20px;line-height:1.15;letter-spacing:-.01em;margin:0}
 .type{
   font-family:var(--mono);font-size:11px;font-weight:500;
-  color:#10130E;background:var(--sucre);
-  border:1px solid var(--sucre);border-radius:6px;
+  color:#0D0F13;background:var(--accent);
+  border:1px solid var(--accent);border-radius:6px;
   padding:3px 8px;white-space:nowrap;flex:none;
 }
 .type.none{background:none;border-color:var(--line);color:var(--muted);opacity:.5}
 
 /* signature : l'empreinte aromatique en 4 segments */
 .aroma{display:flex;gap:3px}
-.seg{height:5px;flex:1;border-radius:3px;background:#2A3323}
+.seg{height:5px;flex:1;border-radius:3px;background:#232B34}
 .seg.on{background:var(--c)}
 .meta{display:flex;flex-direction:column;align-items:stretch;gap:8px}
-.tags,.notes{display:flex;flex-wrap:wrap;gap:6px;font-size:12.5px}
-.notes{justify-content:flex-end}
+.tags{display:flex;flex-wrap:wrap;gap:6px;font-size:12.5px}
 .tag{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:3px 10px}
 .tag .dot{width:7px;height:7px;border-radius:50%;background:var(--c)}
-.tag.note{font-family:var(--mono);font-size:11px;color:var(--txt);border-style:dashed;border-color:var(--muted)}
 .tag.empty{color:var(--muted);border-style:dashed}
 
 .empty-state{border:1px dashed var(--line);border-radius:14px;padding:34px;text-align:center;color:var(--muted)}
@@ -111,15 +110,17 @@ select:focus-visible,input:focus-visible,button:focus-visible{outline:2px solid 
 /* ── Mode édition ──────────────────────────────────────── */
 .card-actions{display:none;gap:6px}
 body.editing .card-actions{display:flex}
+.edit-only{display:none}
+body.editing .edit-only{display:inline-block}
 .mini{font-family:var(--mono);font-size:11px;background:var(--surface-2);border:1px solid var(--line);color:var(--muted);border-radius:6px;padding:4px 8px;cursor:pointer}
 .mini:hover{color:var(--txt)}
-.mini.del:hover{color:var(--fruite);border-color:var(--fruite)}
+.mini.del:hover{color:#D9614E;border-color:#D9614E}
 .add-card{
   border:1px dashed var(--line);border-radius:14px;background:none;color:var(--muted);
   font-family:var(--body);font-size:14px;cursor:pointer;min-height:120px;display:none;
 }
 body.editing .add-card{display:block}
-.add-card:hover{color:var(--herbace);border-color:var(--herbace)}
+.add-card:hover{color:var(--accent);border-color:var(--accent)}
 
 .bar{
   position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--surface-2);
@@ -129,7 +130,7 @@ body.editing .add-card{display:block}
 .bar-inner{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .bar span{font-size:13.5px;color:var(--muted)}
 .primary{
-  font-family:var(--body);font-weight:600;font-size:14px;background:var(--herbace);color:#10130E;
+  font-family:var(--body);font-weight:600;font-size:14px;background:var(--accent);color:#0D0F13;
   border:0;border-radius:999px;padding:9px 18px;cursor:pointer;
 }
 .primary:hover{filter:brightness(1.08)}
@@ -138,7 +139,7 @@ dialog{
   border:1px solid var(--line);border-radius:16px;background:var(--surface);color:var(--txt);
   padding:0;width:min(440px,92vw);
 }
-dialog::backdrop{background:rgba(8,10,7,.7)}
+dialog::backdrop{background:rgba(6,8,11,.7)}
 .dlg{padding:22px}
 .dlg h2{font-family:var(--display);font-size:22px;margin:0 0 16px}
 .row{margin-bottom:14px;display:flex;flex-direction:column;gap:6px}
@@ -146,7 +147,7 @@ dialog::backdrop{background:rgba(8,10,7,.7)}
 .row .hint{font-size:12px;color:var(--muted)}
 .checks{display:flex;flex-wrap:wrap;gap:8px}
 .check{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:999px;padding:7px 13px;cursor:pointer;font-size:14px}
-.check input{accent-color:var(--herbace)}
+.check input{accent-color:var(--accent)}
 .dlg-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}
 
 @media (max-width:640px){
@@ -162,9 +163,9 @@ dialog::backdrop{background:rgba(8,10,7,.7)}
 
 <div class="wrap">
   <header>
-    <p class="eyebrow">Catalogue interne — <span id="stamp">40</span> références</p>
-    <h1>Herbier<em>.</em></h1>
-    <p class="sub">Filtrez par type, puis par profil aromatique. Combinez autant de profils que nécessaire.</p>
+    <p class="eyebrow">Catalogue interne — <span id="stamp">3</span> références</p>
+    <h1>Isolatier<em>.</em></h1>
+    <p class="sub">Filtrez par type, puis par arôme. Combinez autant d'arômes que nécessaire.</p>
   </header>
 </div>
 
@@ -178,7 +179,7 @@ dialog::backdrop{background:rgba(8,10,7,.7)}
 
       <div class="capsules" id="capsules"></div>
 
-      <div class="logic" role="group" aria-label="Combinaison des profils">
+      <div class="logic" role="group" aria-label="Combinaison des arômes">
         <button type="button" data-logic="or" aria-pressed="false">AU MOINS UN</button>
         <button type="button" data-logic="and" aria-pressed="true">TOUS</button>
       </div>
@@ -189,6 +190,9 @@ dialog::backdrop{background:rgba(8,10,7,.7)}
 
       <button class="ghost" id="reset" type="button">Effacer les filtres</button>
       <div class="spacer"></div>
+      <button class="ghost edit-only" id="importXlsx" type="button">Importer un tableur</button>
+      <button class="ghost edit-only" id="exportXlsx" type="button">Exporter en .xlsx</button>
+      <input type="file" id="fileXlsx" accept=".xlsx,.xlsm,.xls,.csv" hidden>
       <button class="ghost" id="editToggle" type="button" aria-pressed="false">Mode édition</button>
     </div>
   </div>
@@ -214,21 +218,16 @@ dialog::backdrop{background:rgba(8,10,7,.7)}
     <h2 id="dlgTitle">Nouvelle référence</h2>
     <div class="row">
       <label class="lbl" for="f-ref">Référence</label>
-      <input type="text" id="f-ref" required placeholder="Green Apple">
+      <input type="text" id="f-ref" required placeholder="Crumble">
     </div>
     <div class="row">
       <label class="lbl" for="f-type">Type</label>
-      <input type="text" id="f-type" list="types" placeholder="30% Gold">
+      <input type="text" id="f-type" list="types" placeholder="88% CBD">
       <datalist id="types"></datalist>
     </div>
     <div class="row">
-      <span class="lbl">Profils aromatiques</span>
-      <div class="checks" id="f-profils"></div>
-    </div>
-    <div class="row">
-      <label class="lbl" for="f-notes">Notes</label>
-      <input type="text" id="f-notes" placeholder="Acidulé, Agrume">
-      <span class="hint">Séparez par des virgules. Laissez vide s'il n'y en a pas.</span>
+      <span class="lbl">Arômes</span>
+      <div class="checks" id="f-aromes"></div>
     </div>
     <div class="dlg-actions">
       <button class="ghost" value="cancel" type="submit" formnovalidate>Annuler</button>
@@ -239,17 +238,17 @@ dialog::backdrop{background:rgba(8,10,7,.7)}
 
 <script src="data.js"></script>
 <script>
-const PROFILS = [
-  {nom:'Fruité',  css:'var(--fruite)'},
-  {nom:'Sucré',   css:'var(--sucre)'},
-  {nom:'Herbacé', css:'var(--herbace)'},
-  {nom:'Terreux', css:'var(--terreux)'}
+const AROMES = [
+  {nom:'Royal',    css:'var(--royal)'},
+  {nom:'Huileux',  css:'var(--huileux)'},
+  {nom:'Citronné', css:'var(--citron)'},
+  {nom:'Acidulé',  css:'var(--acidule)'}
 ];
-const KEY = 'herbier-brouillon';
-const TKEY = 'herbier-token';
-const GH = { owner:'ownleex', repo:'herbier', branch:'main', path:'data.js' };
+const KEY = 'isolatier-brouillon';
+const TKEY = 'isolatier-token';
+const GH = { owner:'ownleex', repo:'isolatier', branch:'main', path:'data.js' };
 
-let base = structuredClone(HERBES);   // dernier contenu publié connu
+let base = structuredClone(ISOLATS);   // dernier contenu publié connu
 let data = charger();
 let actifs = new Set();
 let logic = 'and';
@@ -261,7 +260,7 @@ function charger(){
     const brouillon = localStorage.getItem(KEY);
     if(brouillon) return JSON.parse(brouillon);
   }catch(e){}
-  return structuredClone(HERBES);
+  return structuredClone(ISOLATS);
 }
 function sauverBrouillon(){
   try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
@@ -279,10 +278,10 @@ function majBarre(txt){
 
 /* ── Construction des contrôles ─────────────────────────── */
 const capsules = document.getElementById('capsules');
-PROFILS.forEach(p=>{
+AROMES.forEach(p=>{
   const b = document.createElement('button');
   b.type='button'; b.className='cap'; b.style.setProperty('--c',p.css);
-  b.setAttribute('aria-pressed','false'); b.dataset.profil = p.nom;
+  b.setAttribute('aria-pressed','false'); b.dataset.arome = p.nom;
   b.innerHTML = '<span class="dot"></span>' + p.nom;
   b.onclick = ()=>{
     actifs.has(p.nom) ? actifs.delete(p.nom) : actifs.add(p.nom);
@@ -291,8 +290,8 @@ PROFILS.forEach(p=>{
   };
   capsules.appendChild(b);
 });
-const checks = document.getElementById('f-profils');
-PROFILS.forEach(p=>{
+const checks = document.getElementById('f-aromes');
+AROMES.forEach(p=>{
   const l = document.createElement('label');
   l.className='check';
   l.innerHTML = '<input type="checkbox" value="'+p.nom+'"> '+p.nom;
@@ -307,7 +306,8 @@ document.querySelectorAll('.logic button').forEach(b=>{
 });
 function majTypes(){
   const sel = document.getElementById('type'), garde = sel.value;
-  const types = [...new Set(data.map(h=>h.type).filter(Boolean))].sort();
+  const types = [...new Set(data.map(h=>h.type).filter(Boolean))]
+    .sort((a,b)=> a.localeCompare(b,'fr',{numeric:true}));
   sel.innerHTML = '<option value="">Tous les types</option>' +
     types.map(t=>`<option>${esc(t)}</option>`).join('');
   if(data.some(h=>!h.type)) sel.innerHTML += '<option value="__none">Sans type</option>';
@@ -330,7 +330,7 @@ document.getElementById('editToggle').onclick = (e)=>{
 
 /* ── Rendu ─────────────────────────────────────────────── */
 function esc(s){ return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
-function couleur(nom){ return (PROFILS.find(p=>p.nom===nom)||{}).css || 'var(--muted)'; }
+function couleur(nom){ return (AROMES.find(p=>p.nom===nom)||{}).css || 'var(--muted)'; }
 
 function filtrer(){
   const t = document.getElementById('type').value;
@@ -339,10 +339,10 @@ function filtrer(){
     if(t === '__none' && h.type) return false;
     if(t && t !== '__none' && h.type !== t) return false;
     if(actifs.size){
-      const has = [...actifs].filter(p=>(h.profils||[]).includes(p));
+      const has = [...actifs].filter(a=>(h.aromes||[]).includes(a));
       if(logic === 'and' ? has.length !== actifs.size : has.length === 0) return false;
     }
-    if(q && !(h.ref+' '+h.type+' '+(h.notes||[]).join(' ')).toLowerCase().includes(q)) return false;
+    if(q && !(h.ref+' '+h.type).toLowerCase().includes(q)) return false;
     return true;
   }).sort((a,b)=> a.ref.localeCompare(b.ref,'fr',{sensitivity:'base',numeric:true}));
 }
@@ -353,16 +353,15 @@ function rendre(){
   document.getElementById('stamp').textContent = data.length;
   document.getElementById('count').innerHTML =
     `<b>${res.length}</b> référence${res.length>1?'s':''} sur ${data.length}` +
-    (actifs.size ? ` · ${logic==='and'?'tous les profils':'au moins un profil'} : ${[...actifs].join(', ')}` : '');
+    (actifs.size ? ` · ${logic==='and'?'tous les arômes':'au moins un arôme'} : ${[...actifs].join(', ')}` : '');
 
   grid.innerHTML = res.map(h=>{
-    const profils = h.profils || [], notes = h.notes || [];
-    const segs = PROFILS.map(p=>
-      `<span class="seg ${profils.includes(p.nom)?'on':''}" style="--c:${p.css}"></span>`).join('');
-    const tags = profils.length
-      ? profils.map(p=>`<span class="tag" style="--c:${couleur(p)}"><span class="dot"></span>${esc(p)}</span>`).join('')
-      : '<span class="tag empty">Profil non renseigné</span>';
-    const nt = notes.map(n=>`<span class="tag note">${esc(n)}</span>`).join('');
+    const aromes = h.aromes || [];
+    const segs = AROMES.map(a=>
+      `<span class="seg ${aromes.includes(a.nom)?'on':''}" style="--c:${a.css}"></span>`).join('');
+    const tags = aromes.length
+      ? aromes.map(a=>`<span class="tag" style="--c:${couleur(a)}"><span class="dot"></span>${esc(a)}</span>`).join('')
+      : '<span class="tag empty">Arôme non renseigné</span>';
     return `<article class="card">
       <div class="card-top">
         <h3 class="ref">${esc(h.ref)}</h3>
@@ -371,7 +370,6 @@ function rendre(){
       <div class="aroma" aria-hidden="true">${segs}</div>
       <div class="meta">
         <div class="tags">${tags}</div>
-        ${nt ? `<div class="notes">${nt}</div>` : ''}
       </div>
       <div class="card-actions">
         <button class="mini" data-edit="${h.id}">Modifier</button>
@@ -382,7 +380,7 @@ function rendre(){
 
   if(!res.length){
     grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">
-      <b>Aucune référence ne correspond</b>Retirez un profil ou repassez le type sur « Tous les types ».</div>`;
+      <b>Aucune référence ne correspond</b>Retirez un arôme ou repassez le type sur « Tous les types ».</div>`;
   }
   const add = document.createElement('button');
   add.className='add-card'; add.type='button'; add.textContent='+  Ajouter une référence';
@@ -404,12 +402,11 @@ function rendre(){
 const dlg = document.getElementById('dlg');
 function ouvrir(id){
   cible = id;
-  const h = id ? data.find(x=>x.id===id) : {ref:'',type:'',profils:[],notes:[]};
+  const h = id ? data.find(x=>x.id===id) : {ref:'',type:'',aromes:[]};
   document.getElementById('dlgTitle').textContent = id ? 'Modifier la référence' : 'Nouvelle référence';
   document.getElementById('f-ref').value = h.ref;
   document.getElementById('f-type').value = h.type || '';
-  document.getElementById('f-notes').value = (h.notes||[]).join(', ');
-  checks.querySelectorAll('input').forEach(i=> i.checked = (h.profils||[]).includes(i.value));
+  checks.querySelectorAll('input').forEach(i=> i.checked = (h.aromes||[]).includes(i.value));
   dlg.showModal();
 }
 document.getElementById('form').addEventListener('submit', e=>{
@@ -417,14 +414,13 @@ document.getElementById('form').addEventListener('submit', e=>{
   const val = {
     ref:  document.getElementById('f-ref').value.trim(),
     type: document.getElementById('f-type').value.trim(),
-    profils: [...checks.querySelectorAll('input:checked')].map(i=>i.value),
-    notes: document.getElementById('f-notes').value.split(',').map(s=>s.trim()).filter(Boolean)
+    aromes: [...checks.querySelectorAll('input:checked')].map(i=>i.value)
   };
   if(cible){
     Object.assign(data.find(x=>x.id===cible), val);
   }else{
-    let n = 1; while(data.some(x=>x.id === 'h'+String(n).padStart(2,'0'))) n++;
-    data.push({id:'h'+String(n).padStart(2,'0'), ...val});
+    let n = 1; while(data.some(x=>x.id === 'is'+String(n).padStart(2,'0'))) n++;
+    data.push({id:'is'+String(n).padStart(2,'0'), ...val});
   }
   sauverBrouillon(); rendre();
 });
@@ -440,12 +436,11 @@ function fichierData(){
 //  effacez sa ligne. Attention à la virgule en fin de ligne :
 //  toutes les lignes en ont une, sauf la dernière.
 //
-//  profils : uniquement parmi "Fruité", "Sucré", "Herbacé", "Terreux"
-//  notes   : texte libre ("Acidulé", "Agrume", "Exotique"…)
-//  id      : doit rester unique
+//  aromes : uniquement parmi "Royal", "Huileux", "Citronné", "Acidulé"
+//  id     : doit rester unique
 // ─────────────────────────────────────────────────────────────
 
-const HERBES = [
+const ISOLATS = [
 `;
   return entete + data.map(h=>'  '+JSON.stringify(h)).join(',\n') + '\n];\n';
 }
@@ -462,6 +457,139 @@ document.getElementById('revert').onclick = ()=>{
   rendre();
 };
 
+/* ── Tableur : import et export ────────────────────────── */
+const CDN_XLSX = 'https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js';
+const COLONNES = ['id','ref','type','aromes'];
+let libXlsx = null;
+
+function chargerLib(){
+  if(libXlsx) return libXlsx;
+  libXlsx = new Promise((ok, ko)=>{
+    const s = document.createElement('script');
+    s.src = CDN_XLSX;
+    s.onload  = ()=> ok(window.XLSX);
+    s.onerror = ()=>{ libXlsx = null; ko(new Error('Bibliothèque tableur inaccessible. Vérifiez la connexion, puis réessayez.')); };
+    document.head.appendChild(s);
+  });
+  return libXlsx;
+}
+
+function normalise(s){
+  return String(s).trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+}
+function colonne(cle){
+  const n = normalise(cle);
+  if(n === 'id') return 'id';
+  if(['ref','reference','references','nom'].includes(n)) return 'ref';
+  if(['type','gamme','categorie'].includes(n)) return 'type';
+  if(['arome','aromes','profil','profils'].includes(n)) return 'aromes';
+  return null;
+}
+function decouper(v){
+  return String(v == null ? '' : v).split(/[,;|/]/).map(s=>s.trim()).filter(Boolean);
+}
+function cle(v){
+  // insensible à la casse, aux accents et aux lettres doublées : « citroné » = « Citronné »
+  return normalise(v).replace(/(.)\1+/g, '$1');
+}
+function aromeConnu(v){
+  const n = cle(v);
+  return (AROMES.find(a=>cle(a.nom) === n) || {}).nom || null;
+}
+function aromesDe(v){
+  const direct = aromeConnu(v);
+  if(direct) return [direct];
+  // « Citroné acidulé » sans virgule : accepté si chaque mot est un arôme connu
+  const mots = v.split(/\s+/).filter(Boolean).map(aromeConnu);
+  return (mots.length > 1 && mots.every(Boolean)) ? mots : [];
+}
+function idLibre(pris){
+  let n = 1;
+  while(pris.has('is'+String(n).padStart(2,'0'))) n++;
+  const id = 'is'+String(n).padStart(2,'0');
+  pris.add(id);
+  return id;
+}
+
+document.getElementById('importXlsx').onclick = ()=> document.getElementById('fileXlsx').click();
+
+document.getElementById('fileXlsx').onchange = async (e)=>{
+  const f = e.target.files[0];
+  e.target.value = '';           // permet de réimporter le même fichier
+  if(!f) return;
+  majBarre('Lecture de « ' + f.name + ' »…');
+  try{
+    const XLSX = await chargerLib();
+    const wb = XLSX.read(await f.arrayBuffer());
+    const feuille = wb.SheetNames.find(n=>['isolatier','isolat','isolats','references'].includes(normalise(n)))
+                 || wb.SheetNames[0];
+    const lignes = XLSX.utils.sheet_to_json(wb.Sheets[feuille], {defval:'', raw:false});
+    if(!lignes.length) throw new Error('La feuille « ' + feuille + ' » ne contient aucune ligne.');
+
+    const pris = new Set(), inconnus = new Set(), lu = [];
+    let sansRef = 0;
+
+    lignes.forEach(l=>{
+      const o = {};
+      for(const cle in l){ const c = colonne(cle); if(c) o[c] = l[cle]; }
+
+      const ref = String(o.ref || '').trim();
+      if(!ref){ sansRef++; return; }
+
+      const aromes = [];
+      decouper(o.aromes).forEach(v=>{
+        const trouves = aromesDe(v);
+        if(!trouves.length) return inconnus.add(v);
+        trouves.forEach(a=>{ if(!aromes.includes(a)) aromes.push(a); });
+      });
+
+      let id = String(o.id || '').trim();
+      if(!id || pris.has(id)) id = idLibre(pris); else pris.add(id);
+
+      lu.push({id, ref, type:String(o.type || '').trim(), aromes});
+    });
+
+    if(!lu.length) throw new Error('Aucune ligne exploitable : la colonne « ref » est absente ou vide.');
+    if(!confirm(`Remplacer les ${data.length} références actuelles par les ${lu.length} du fichier ?`))
+      return majBarre('Import abandonné, rien n\'a changé.');
+
+    data = lu;
+    sauverBrouillon();
+    rendre();
+
+    const alertes = [];
+    if(sansRef) alertes.push(sansRef + ' ligne' + (sansRef>1?'s':'') + ' sans référence, écartée' + (sansRef>1?'s':''));
+    if(inconnus.size) alertes.push('arômes non reconnus, laissés de côté : ' + [...inconnus].join(', '));
+    majBarre(lu.length + ' références importées' + (alertes.length ? ' — ' + alertes.join(' ; ') : '') +
+             '. Publiez pour les mettre en ligne.');
+  }catch(err){
+    majBarre('⚠ ' + err.message);
+  }
+};
+
+document.getElementById('exportXlsx').onclick = async ()=>{
+  majBarre('Préparation du fichier…');
+  try{
+    const XLSX = await chargerLib();
+    const lignes = [...data]
+      .sort((a,b)=> a.ref.localeCompare(b.ref,'fr',{sensitivity:'base',numeric:true}))
+      .map(h=>({
+        id: h.id,
+        ref: h.ref,
+        type: h.type || '',
+        aromes: (h.aromes || []).join(', ')
+      }));
+    const ws = XLSX.utils.json_to_sheet(lignes, {header: COLONNES});
+    ws['!cols'] = [{wch:6},{wch:26},{wch:14},{wch:28}];
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Isolatier');
+    XLSX.writeFile(wb, 'isolatier.xlsx');
+    majBarre(data.length + ' références exportées dans isolatier.xlsx.');
+  }catch(err){
+    majBarre('⚠ ' + err.message);
+  }
+};
+
 /* ── Publication sur GitHub ────────────────────────────── */
 function b64(txt){
   const o = new TextEncoder().encode(txt);
@@ -474,7 +602,7 @@ function jeton(){
 }
 function demanderJeton(){
   const v = prompt(
-    'Jeton GitHub (fine-grained, permission Contents: Read and write sur ownleex/herbier).\n' +
+    'Jeton GitHub (fine-grained, permission Contents: Read and write sur ownleex/isolatier).\n' +
     'Laissez vide pour effacer le jeton enregistré.',
     jeton());
   if(v === null) return jeton();
